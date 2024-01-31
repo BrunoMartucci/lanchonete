@@ -1,6 +1,7 @@
 package com.exemple.lanchonete.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,8 +30,8 @@ public class EstoqueEntrada extends PadraoIdInteiro{
         this.produto = produto;
     }
 
-    public void setQuantidade(Long quantidade) {
-        this.quantidade = quantidade;
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = Long.valueOf(quantidade);
     }
 
     public void setDataEntrada(Date dataEntrada) {

@@ -34,7 +34,7 @@ public class Receita extends PadraoIdInteiro{
         return ingrediente;
     }
 
-    public Long getQuantidade() {
-        return quantidade;
+    public Integer getQuantidade() {
+        return Math.toIntExact(quantidade);
     }
 }

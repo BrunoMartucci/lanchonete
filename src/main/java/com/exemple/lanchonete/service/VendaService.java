@@ -16,7 +16,7 @@ public class VendaService {
     @Autowired
     private EstoqueService estoqueService;
 
-    public void realizarVenda(Long clienteId, Produto produto, int quantidade) {
+    public void realizarVenda(Integer clienteId, Produto produto, int quantidade) {
         Cliente cliente = clienteService.obterClientePorId(clienteId);
 
         BigDecimal valorTotal = produto.getValorDeVenda().multiply(BigDecimal.valueOf(quantidade));

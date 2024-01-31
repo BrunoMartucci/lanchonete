@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/produtos")
+@RequestMapping("/produtos")
 public class ProdutoController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> obterProduto(@PathVariable Long id) {
+    public ResponseEntity<Produto> obterProduto(@PathVariable Integer id) {
         try {
             Produto produto = produtoService.obterProdutoPorId(id);
             return ResponseEntity.ok(produto);
@@ -32,14 +32,14 @@ public class ProdutoController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Produto> cadastrarProduto(@RequestBody Produto produto) {
+    @PostMapping("/cadastrar")
+    public ResponseEntity<Produto> cadastrar(@RequestBody Produto produto) {
         Produto novoProduto = produtoService.cadastrarProduto(produto);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoProduto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @RequestBody Produto produtoAtualizado) {
+    public ResponseEntity<Produto> atualizarProduto(@PathVariable Integer id, @RequestBody Produto produtoAtualizado) {
         try {
             Produto produto = produtoService.atualizarProduto(id, produtoAtualizado);
             return ResponseEntity.ok(produto);
@@ -49,7 +49,7 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarProduto(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarProduto(@PathVariable Integer id) {
         try {
             produtoService.deletarProduto(id);
             return ResponseEntity.noContent().build();

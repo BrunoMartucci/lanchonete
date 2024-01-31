@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Producao {
+public class Producao extends PadraoIdInteiro{
 
     @ManyToOne
     @JoinColumn(name = "produto_final_id", nullable = false)

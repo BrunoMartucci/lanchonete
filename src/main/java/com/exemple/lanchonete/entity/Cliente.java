@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Cliente {
+public class Cliente extends PadraoIdInteiro{
 
     @Column(nullable = false, unique = true, length = 60)
     private String nome;
@@ -23,12 +24,8 @@ public class Cliente {
     @Column(nullable = false)
     private BigDecimal creditos;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private Date dataDeCadastro;
-
-    // Outros campos e métodos...
-
+    private LocalDate dataDeCadastro = LocalDate.now();
 
     public String getNome() {
         return nome;
@@ -46,11 +43,11 @@ public class Cliente {
         this.creditos = creditos;
     }
 
-    public Date getDataDeCadastro() {
+    public LocalDate getDataDeCadastro() {
         return dataDeCadastro;
     }
 
-    public void setDataDeCadastro(Date dataDeCadastro) {
+    public void setDataDeCadastro(LocalDate dataDeCadastro) {
         this.dataDeCadastro = dataDeCadastro;
     }
 }

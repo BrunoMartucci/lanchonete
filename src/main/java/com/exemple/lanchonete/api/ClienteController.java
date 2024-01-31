@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> obterCliente(@PathVariable Long id) {
+    public ResponseEntity<Cliente> obterCliente(@PathVariable Integer id) {
         try {
             Cliente cliente = clienteService.obterClientePorId(id);
             return ResponseEntity.ok(cliente);
@@ -39,7 +40,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteAtualizado) {
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Integer id, @RequestBody Cliente clienteAtualizado) {
         try {
             Cliente cliente = clienteService.atualizarCliente(id, clienteAtualizado);
             return ResponseEntity.ok(cliente);
@@ -49,12 +50,27 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarCliente(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarCliente(@PathVariable Integer id) {
         try {
             clienteService.deletarCliente(id);
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/adicionarCreditosAoCliente")
+    public ResponseEntity<String> adicionarCreditosAoCliente(
+            @RequestParam Integer clienteId,
+            @RequestParam BigDecimal valor
+    ) {
+        try {
+            clienteService.adicionarCreditosAoCliente(clienteId, valor);
+            return ResponseEntity.ok("Créditos adicionados com sucesso");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno no servidor");
         }
     }
 }

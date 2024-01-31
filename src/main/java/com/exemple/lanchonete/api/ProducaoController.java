@@ -15,7 +15,7 @@ public class ProducaoController {
     private ProducaoService producaoService;
 
     @PostMapping("/produzir/{produtoId}")
-    public ResponseEntity<String> produzirProduto(@PathVariable Long produtoId) {
+    public ResponseEntity<String> produzirProduto(@PathVariable Integer produtoId) {
         try {
             Produto produtoFinal = producaoService.obterProdutoPorId(produtoId);
             producaoService.produzirProduto(produtoFinal);

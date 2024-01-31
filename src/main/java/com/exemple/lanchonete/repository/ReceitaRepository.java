@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReceitaRepository extends JpaRepository<Receita, Long> {
+public interface ReceitaRepository extends JpaRepository<Receita, Integer> {
     List<Receita> findByProdutoFinal(Produto produtoFinal);
 }
 

@@ -50,7 +50,7 @@ public class ProducaoService {
         producao.setDataProducao(new Date());
         producaoRepository.save(producao);
     }
-    public Produto obterProdutoPorId(Long produtoId) {
+    public Produto obterProdutoPorId(Integer produtoId) {
         return produtoRepository.findById(produtoId)
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com o ID: " + produtoId));
     }

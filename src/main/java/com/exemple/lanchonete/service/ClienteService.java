@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteService {
@@ -29,7 +30,7 @@ public class ClienteService {
         return (Cliente) clienteRepository.save(cliente);
     }
 
-    public Cliente atualizarCliente(Long id, Cliente clienteAtualizado) {
+    public Cliente atualizarCliente(Integer id, Cliente clienteAtualizado) {
         Cliente cliente = obterClientePorId(id);
 
         cliente.setNome(clienteAtualizado.getNome());
@@ -38,24 +39,31 @@ public class ClienteService {
         return (Cliente) clienteRepository.save(cliente);
     }
 
-    public void deletarCliente(Long id) {
+    public void deletarCliente(Integer id) {
         Cliente cliente = obterClientePorId(id);
         clienteRepository.delete(cliente);
     }
 
 
 
-    public Cliente obterClientePorId(Long clienteId) {
-        return clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com o ID: " + clienteId));
+    public Cliente obterClientePorId(Integer clienteId) {
+        Optional<Cliente> clienteOptional = clienteRepository.findById(clienteId);
+
+        if (clienteOptional.isPresent()) {
+            return clienteOptional.get();
+        } else {
+            throw new EntityNotFoundException("Cliente não encontrado com o ID: " + clienteId);
+        }
     }
 
-    public void adicionarCreditosAoCliente(Long clienteId, BigDecimal valor) {
+    public void adicionarCreditosAoCliente(Integer clienteId, BigDecimal valor) {
         if (valor.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("O valor dos créditos deve ser maior que zero");
         }
 
-        Cliente cliente = obterClientePorId(clienteId);
+        Cliente cliente = clienteRepository.findById(clienteId)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com o ID: " + clienteId));
+
         cliente.setCreditos(cliente.getCreditos().add(valor));
         clienteRepository.save(cliente);
     }

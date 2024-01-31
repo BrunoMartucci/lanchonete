@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Produto {
+public class Produto extends PadraoIdInteiro{
 
     @Column(nullable = false, unique = true, length = 60)
     private String nomeProduto;
@@ -31,9 +32,8 @@ public class Produto {
     @Enumerated(EnumType.STRING)
     private SituacaoDoProduto situacaoDoProduto;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private Date dataDeCadastro;
+    private LocalDate dataDeCadastro = LocalDate.now();
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
     private List<EstoqueEntrada> entradasEstoque;
@@ -68,7 +68,7 @@ public class Produto {
         return situacaoDoProduto;
     }
 
-    public Date getDataDeCadastro() {
+    public LocalDate getDataDeCadastro() {
         return dataDeCadastro;
     }
 
@@ -108,7 +108,7 @@ public class Produto {
         this.situacaoDoProduto = situacaoDoProduto;
     }
 
-    public void setDataDeCadastro(Date dataDeCadastro) {
+    public void setDataDeCadastro(LocalDate dataDeCadastro) {
         this.dataDeCadastro = dataDeCadastro;
     }
 

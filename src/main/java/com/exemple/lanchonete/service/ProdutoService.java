@@ -47,7 +47,7 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    public Produto atualizarProduto(Long id, Produto produtoAtualizado) {
+    public Produto atualizarProduto(Integer id, Produto produtoAtualizado) {
         Produto produto = obterProdutoPorId(id);
 
         // Lógica para atualizar outros campos, se necessário
@@ -60,12 +60,12 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    public void deletarProduto(Long id) {
+    public void deletarProduto(Integer id) {
         Produto produto = obterProdutoPorId(id);
         produtoRepository.delete(produto);
     }
 
-    public Produto obterProdutoPorId(Long produtoId) {
+    public Produto obterProdutoPorId(Integer produtoId) {
         return produtoRepository.findById(produtoId)
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com o ID: " + produtoId));
     }
