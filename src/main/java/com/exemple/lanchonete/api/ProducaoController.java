@@ -15,18 +15,12 @@ public class ProducaoController {
     private ProducaoService producaoService;
 
     @PostMapping("/produzir/{produtoId}")
-    public ResponseEntity<String> produzirProduto(@PathVariable Integer produtoId) {
+    public ResponseEntity<Void> produzirProduto(@PathVariable Integer produtoId) {
         try {
-            Produto produtoFinal = producaoService.obterProdutoPorId(produtoId);
-            producaoService.produzirProduto(produtoFinal);
-
-            // Se você quiser rastrear as produções, crie uma entidade Producao e persista no repositório ProducaoRepository
-
-            return ResponseEntity.ok("Produção realizada com sucesso.");
+            producaoService.produzirProduto(produtoId);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro durante a produção: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    // Outros métodos relacionados à produção...
 }

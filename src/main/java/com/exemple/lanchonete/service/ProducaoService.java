@@ -15,6 +15,9 @@ import java.util.Date;
 public class ProducaoService {
 
     @Autowired
+    private ReceitaService receitaService;
+
+    @Autowired
     private EstoqueService estoqueService;
 
     @Autowired
@@ -23,9 +26,13 @@ public class ProducaoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public void produzirProduto(Produto produtoFinal) {
+
+    public void produzirProduto(Integer produtoId) {
+        // Obtém o produto final a ser produzido
+        Produto produtoFinal = obterProdutoPorId(produtoId);
+
         // Verifica se há ingredientes suficientes
-        for (Receita receita : produtoFinal.getReceitas()) {
+        for (Receita receita : receitaService.obterReceitasPorProdutoFinal(produtoFinal)) {
             Produto ingrediente = receita.getIngrediente();
             int quantidadeNecessaria = receita.getQuantidade();
 
@@ -35,7 +42,7 @@ public class ProducaoService {
         }
 
         // Realiza a produção
-        for (Receita receita : produtoFinal.getReceitas()) {
+        for (Receita receita : receitaService.obterReceitasPorProdutoFinal(produtoFinal)) {
             Produto ingrediente = receita.getIngrediente();
             int quantidadeNecessaria = receita.getQuantidade();
 
