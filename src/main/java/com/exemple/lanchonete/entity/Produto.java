@@ -2,20 +2,16 @@ package com.exemple.lanchonete.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
-
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Produto extends PadraoIdInteiro{
+public class Produto extends PadraoIdInteiro {
 
     @Column(nullable = false, unique = true, length = 60)
     private String nomeProduto;
@@ -36,17 +32,13 @@ public class Produto extends PadraoIdInteiro{
     private LocalDate dataDeCadastro = LocalDate.now();
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
-    private List<EstoqueEntrada> entradasEstoque;
-
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
-    private List<EstoqueSaida> saidasEstoque;
+    private List<Estoque> estoque;  // Alteração para a lista de Estoque
 
     @OneToMany(mappedBy = "produtoFinal", cascade = CascadeType.ALL)
     private List<Receita> receitas;
 
     @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL)
     private List<Receita> receitasComIngrediente;
-
 
     public String getNomeProduto() {
         return nomeProduto;
@@ -72,12 +64,8 @@ public class Produto extends PadraoIdInteiro{
         return dataDeCadastro;
     }
 
-    public List<EstoqueEntrada> getEntradasEstoque() {
-        return entradasEstoque;
-    }
-
-    public List<EstoqueSaida> getSaidasEstoque() {
-        return saidasEstoque;
+    public List<Estoque> getEstoque() {  // Alteração para a lista de Estoque
+        return estoque;
     }
 
     public List<Receita> getReceitas() {
@@ -112,19 +100,16 @@ public class Produto extends PadraoIdInteiro{
         this.dataDeCadastro = dataDeCadastro;
     }
 
-    public void setEntradasEstoque(List<EstoqueEntrada> entradasEstoque) {
-        this.entradasEstoque = entradasEstoque;
+    public void setEstoque(List<Estoque> estoque) {  // Alteração para a lista de Estoque
+        this.estoque = estoque;
     }
 
-    public void setSaidasEstoque(List<EstoqueSaida> saidasEstoque) {
-        this.saidasEstoque = saidasEstoque;
-    }
-
-    public void setReceitas(List<Receita> receitas) {
-        this.receitas = receitas;
-    }
+   // public void setReceitas(List<Receita> receitas) {
+   //     this.receitas = receitas;
+   // }
 
     public void setReceitasComIngrediente(List<Receita> receitasComIngrediente) {
         this.receitasComIngrediente = receitasComIngrediente;
     }
+
 }

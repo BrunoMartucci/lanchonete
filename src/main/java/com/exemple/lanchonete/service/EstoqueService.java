@@ -1,49 +1,42 @@
 package com.exemple.lanchonete.service;
 
-import com.exemple.lanchonete.entity.EstoqueEntrada;
-import com.exemple.lanchonete.entity.EstoqueSaida;
+import com.exemple.lanchonete.entity.Estoque;
 import com.exemple.lanchonete.entity.Produto;
-import com.exemple.lanchonete.repository.EstoqueEntradaRepository;
-import com.exemple.lanchonete.repository.EstoqueSaidaRepository;
+import com.exemple.lanchonete.entity.TipoMovimentacaoEstoque;
+import com.exemple.lanchonete.repository.EstoqueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Service
 public class EstoqueService {
 
     @Autowired
-    private EstoqueEntradaRepository estoqueEntradaRepository;
-
-    @Autowired
-    private EstoqueSaidaRepository estoqueSaidaRepository;
+    private EstoqueRepository estoqueRepository;
 
     // Verifica se há estoque suficiente para um produto
     public boolean temEstoque(Produto produto, int quantidadeRequerida) {
-        int quantidadeEntrada = estoqueEntradaRepository.findQuantidadeEntradaByProduto(produto);
-        int quantidadeSaida = estoqueSaidaRepository.findQuantidadeSaidaByProduto(produto);
+        int quantidadeMovimentacao = estoqueRepository.findQuantidadeMovimentacaoByProduto(produto);
 
-        int quantidadeDisponivel = quantidadeEntrada - quantidadeSaida;
-
-        return quantidadeDisponivel >= quantidadeRequerida;
+        return quantidadeMovimentacao >= quantidadeRequerida;
     }
 
     // Obtém a quantidade disponível no estoque para um produto
     public int getQuantidadeDisponivel(Produto produto) {
-        int quantidadeEntrada = estoqueEntradaRepository.findQuantidadeEntradaByProduto(produto);
-        int quantidadeSaida = estoqueSaidaRepository.findQuantidadeSaidaByProduto(produto);
+        int quantidadeMovimentacao = estoqueRepository.findQuantidadeMovimentacaoByProduto(produto);
 
-        return quantidadeEntrada - quantidadeSaida;
+        return quantidadeMovimentacao;
     }
 
     // Realiza uma entrada de estoque para um produto
     public void entradaEstoque(Produto produto, int quantidade) {
-        EstoqueEntrada estoque = new EstoqueEntrada();
+        Estoque estoque = new Estoque();
         estoque.setProduto(produto);
-        estoque.setQuantidade(quantidade);
-        estoque.setDataEntrada(new Date());
-        estoqueEntradaRepository.save(estoque);
+        estoque.setQuantidade((long) quantidade);
+        estoque.setDataMovimentacao(LocalDate.now());
+        estoque.setTipoMovimentacaoEstoque(TipoMovimentacaoEstoque.ENTRADA);
+        estoqueRepository.save(estoque);
     }
 
     // Realiza uma saída de estoque para um produto
@@ -52,13 +45,13 @@ public class EstoqueService {
             throw new RuntimeException("Estoque insuficiente para o produto: " + produto.getNomeProduto());
         }
 
-        EstoqueSaida estoque = new EstoqueSaida();
+        Estoque estoque = new Estoque();
         estoque.setProduto(produto);
         estoque.setQuantidade((long) quantidade);
-        estoque.setDataSaida(new Date());
-        estoqueSaidaRepository.save(estoque);
+        estoque.setDataMovimentacao(LocalDate.now());
+        estoque.setTipoMovimentacaoEstoque(TipoMovimentacaoEstoque.SAIDA);
+        estoqueRepository.save(estoque);
     }
 
     // Implemente outros métodos conforme necessário
 }
-

@@ -1,14 +1,13 @@
 package com.exemple.lanchonete.service;
 
-import com.exemple.lanchonete.entity.Produto;
-import com.exemple.lanchonete.entity.Receita;
-import com.exemple.lanchonete.entity.TipoDoProduto;
+import com.exemple.lanchonete.entity.*;
 import com.exemple.lanchonete.repository.ProdutoRepository;
 import com.exemple.lanchonete.repository.ReceitaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -32,10 +31,6 @@ public class ProdutoService {
             throw new RuntimeException("Já existe um produto com o mesmo nome: " + produto.getNomeProduto());
         }
 
-        // Lógica para inicializar o estoque, se necessário
-        produto.setEntradasEstoque(null); // ajuste conforme a estrutura do seu modelo
-        produto.setSaidasEstoque(null);   // ajuste conforme a estrutura do seu modelo
-
         // Verificar se o tipo do produto é válido (final, matéria-prima, adicional)
         TipoDoProduto tipoDoProduto = produto.getTipoDoProduto();
         if (tipoDoProduto == null) {
@@ -43,6 +38,17 @@ public class ProdutoService {
         }
 
         // Outras verificações específicas do tipo, se necessário...
+
+        // Não é mais necessário inicializar as listas de Entrada e Saída
+
+        // Crie uma instância de Estoque e associe ao produto
+        Estoque estoque = new Estoque();
+        estoque.setProduto(produto);
+        estoque.setQuantidade(0L); // Defina a quantidade inicial conforme necessário
+        estoque.setDataMovimentacao(LocalDate.now());
+        estoque.setTipoMovimentacaoEstoque(TipoMovimentacaoEstoque.ENTRADA); // ou outro tipo, conforme necessário
+
+        produto.setEstoque(List.of(estoque)); // Associe o estoque ao produto
 
         return produtoRepository.save(produto);
     }
