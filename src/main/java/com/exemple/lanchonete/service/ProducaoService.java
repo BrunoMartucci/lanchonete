@@ -62,8 +62,6 @@ public class ProducaoService {
         return produtoRepository.findById(produtoId)
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com o ID: " + produtoId));
     }
-
-    // Outros métodos relacionados à produção...
 }
 
 

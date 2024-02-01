@@ -15,6 +15,9 @@ import java.util.List;
 public class ProdutoService {
 
     @Autowired
+    private ReceitaService receitaService;
+
+    @Autowired
     private EstoqueService estoqueService;
 
     @Autowired
@@ -79,7 +82,8 @@ public class ProdutoService {
 
     public void produzirProduto(Produto produtoFinal) {
         // Verifica se há ingredientes suficientes
-        for (Receita receita : produtoFinal.getReceitas()) {
+        List<Receita> receitas = receitaService.obterReceitasPorProdutoFinal(produtoFinal);
+        for (Receita receita : receitas) {
             Produto ingrediente = receita.getIngrediente();
             BigDecimal quantidadeNecessaria = receita.getQuantidade();
 
@@ -89,7 +93,7 @@ public class ProdutoService {
         }
 
         // Realiza a produção
-        for (Receita receita : produtoFinal.getReceitas()) {
+        for (Receita receita : receitas) {
             Produto ingrediente = receita.getIngrediente();
             BigDecimal quantidadeNecessaria = receita.getQuantidade();
 
@@ -98,4 +102,6 @@ public class ProdutoService {
 
         estoqueService.entradaEstoque(produtoFinal, BigDecimal.valueOf(1)); // Entrada no estoque do produto final
     }
+
+
 }

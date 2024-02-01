@@ -33,4 +33,13 @@ public class ReceitaService {
     public List<Receita> obterReceitasPorProdutoFinal(Produto produtoFinal) {
         return receitaRepository.findByProdutoFinal(produtoFinal);
     }
+
+    private List<Receita> listaDeReceitas;
+
+    public List<Receita> getReceitas() {
+        // Lógica para obter a lista de receitas
+        return listaDeReceitas;
+    }
+
+
 }

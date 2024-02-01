@@ -55,6 +55,4 @@ public class EstoqueService {
         estoque.setTipoMovimentacaoEstoque(TipoMovimentacaoEstoque.SAIDA);
         estoqueRepository.save(estoque);
     }
-
-    // Implemente outros métodos conforme necessário
 }

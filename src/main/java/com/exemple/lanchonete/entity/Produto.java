@@ -34,12 +34,6 @@ public class Produto extends PadraoIdInteiro {
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
     private List<Estoque> estoque;  // Alteração para a lista de Estoque
 
-    @OneToMany(mappedBy = "produtoFinal", cascade = CascadeType.ALL)
-    private List<Receita> receitas;
-
-    @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL)
-    private List<Receita> receitasComIngrediente;
-
     public String getNomeProduto() {
         return nomeProduto;
     }
@@ -66,14 +60,6 @@ public class Produto extends PadraoIdInteiro {
 
     public List<Estoque> getEstoque() {  // Alteração para a lista de Estoque
         return estoque;
-    }
-
-    public List<Receita> getReceitas() {
-        return receitas;
-    }
-
-    public List<Receita> getReceitasComIngrediente() {
-        return receitasComIngrediente;
     }
 
     public void setNomeProduto(String nomeProduto) {
@@ -103,13 +89,4 @@ public class Produto extends PadraoIdInteiro {
     public void setEstoque(List<Estoque> estoque) {  // Alteração para a lista de Estoque
         this.estoque = estoque;
     }
-
-   // public void setReceitas(List<Receita> receitas) {
-   //     this.receitas = receitas;
-   // }
-
-    public void setReceitasComIngrediente(List<Receita> receitasComIngrediente) {
-        this.receitasComIngrediente = receitasComIngrediente;
-    }
-
 }

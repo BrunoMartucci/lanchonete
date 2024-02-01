@@ -181,3 +181,6 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/projetoTraine
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 55 more
+2024-02-01 19:22:09.294103-03:00 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DROP [*]ESTOQUE_ENTRADA"; expected "TABLE, INDEX, USER, SEQUENCE, CONSTANT, TRIGGER, MATERIALIZED, VIEW, ROLE, ALIAS, SCHEMA, ALL OBJECTS, DOMAIN, TYPE, AGGREGATE, SYNONYM"; SQL statement:
+DROP ESTOQUE_ENTRADA [42001-224]

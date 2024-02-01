@@ -36,7 +36,5 @@ public class VendaService {
         clienteService.adicionarCreditosAoCliente(clienteId, valorTotal.negate()); // Deduz os créditos do cliente
     }
 
-    // Outros métodos relacionados a vendas...
-
 }
 

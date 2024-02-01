@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-@Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -51,4 +52,6 @@ public class Receita extends PadraoIdInteiro {
     public void setQuantidade(BigDecimal quantidade) {
         this.quantidade = quantidade;
     }
+
+
 }
