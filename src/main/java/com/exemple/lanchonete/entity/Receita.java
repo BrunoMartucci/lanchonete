@@ -9,11 +9,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Receita extends PadraoIdInteiro{
+public class Receita extends PadraoIdInteiro {
 
     @ManyToOne
     @JoinColumn(name = "produto_final_id", nullable = false)
@@ -24,7 +26,7 @@ public class Receita extends PadraoIdInteiro{
     private Produto ingrediente;
 
     @Column(nullable = false)
-    private Long quantidade;
+    private BigDecimal quantidade;
 
     public Produto getProdutoFinal() {
         return produtoFinal;
@@ -34,7 +36,19 @@ public class Receita extends PadraoIdInteiro{
         return ingrediente;
     }
 
-    public Integer getQuantidade() {
-        return Math.toIntExact(quantidade);
+    public BigDecimal getQuantidade() {
+        return quantidade;
+    }
+
+    public void setProdutoFinal(Produto produtoFinal) {
+        this.produtoFinal = produtoFinal;
+    }
+
+    public void setIngrediente(Produto ingrediente) {
+        this.ingrediente = ingrediente;
+    }
+
+    public void setQuantidade(BigDecimal quantidade) {
+        this.quantidade = quantidade;
     }
 }

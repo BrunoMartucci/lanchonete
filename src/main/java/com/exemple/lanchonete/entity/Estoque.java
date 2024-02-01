@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;  // Import LocalDate instead of java.util.Date
 
 @Getter
@@ -20,7 +21,7 @@ public class Estoque extends PadraoIdInteiro {
     private Produto produto;
 
     @Column(nullable = false)
-    private Long quantidade;
+    private BigDecimal quantidade;
 
     @Column(nullable = false)
     private LocalDate dataMovimentacao;  // Change the type to LocalDate
@@ -33,7 +34,7 @@ public class Estoque extends PadraoIdInteiro {
         this.produto = produto;
     }
 
-    public void setQuantidade(Long quantidade) {
+    public void setQuantidade(BigDecimal quantidade) {
         this.quantidade = quantidade;
     }
 

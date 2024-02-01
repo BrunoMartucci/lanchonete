@@ -7,6 +7,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class ProdutoService {
         // Crie uma instância de Estoque e associe ao produto
         Estoque estoque = new Estoque();
         estoque.setProduto(produto);
-        estoque.setQuantidade(0L); // Defina a quantidade inicial conforme necessário
+        estoque.setQuantidade(BigDecimal.ZERO); // Defina a quantidade inicial conforme necessário
         estoque.setDataMovimentacao(LocalDate.now());
         estoque.setTipoMovimentacaoEstoque(TipoMovimentacaoEstoque.ENTRADA); // ou outro tipo, conforme necessário
 
@@ -80,7 +81,7 @@ public class ProdutoService {
         // Verifica se há ingredientes suficientes
         for (Receita receita : produtoFinal.getReceitas()) {
             Produto ingrediente = receita.getIngrediente();
-            int quantidadeNecessaria = Math.toIntExact(receita.getQuantidade());
+            BigDecimal quantidadeNecessaria = receita.getQuantidade();
 
             if (!estoqueService.temEstoque(ingrediente, quantidadeNecessaria)) {
                 throw new RuntimeException("Estoque insuficiente para o ingrediente: " + ingrediente.getNomeProduto());
@@ -90,11 +91,11 @@ public class ProdutoService {
         // Realiza a produção
         for (Receita receita : produtoFinal.getReceitas()) {
             Produto ingrediente = receita.getIngrediente();
-            int quantidadeNecessaria = Math.toIntExact(receita.getQuantidade());
+            BigDecimal quantidadeNecessaria = receita.getQuantidade();
 
             estoqueService.saidaEstoque(ingrediente, quantidadeNecessaria); // Saída do estoque de ingredientes
         }
 
-        estoqueService.entradaEstoque(produtoFinal, 1); // Entrada no estoque do produto final
+        estoqueService.entradaEstoque(produtoFinal, BigDecimal.valueOf(1)); // Entrada no estoque do produto final
     }
 }

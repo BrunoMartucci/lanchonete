@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Service
@@ -34,22 +35,22 @@ public class ProducaoService {
         // Verifica se há ingredientes suficientes
         for (Receita receita : receitaService.obterReceitasPorProdutoFinal(produtoFinal)) {
             Produto ingrediente = receita.getIngrediente();
-            int quantidadeNecessaria = receita.getQuantidade();
+            BigDecimal quantidadeNecessaria = receita.getQuantidade();
 
-            if (!estoqueService.temEstoque(ingrediente, quantidadeNecessaria)) {
+            if (!estoqueService.temEstoque(ingrediente, BigDecimal.valueOf(quantidadeNecessaria.intValue()))) {
                 throw new RuntimeException("Estoque insuficiente para o ingrediente: " + ingrediente.getNomeProduto());
             }
         }
 
-        // Realiza a produção
+// Realiza a produção
         for (Receita receita : receitaService.obterReceitasPorProdutoFinal(produtoFinal)) {
             Produto ingrediente = receita.getIngrediente();
-            int quantidadeNecessaria = receita.getQuantidade();
+            BigDecimal quantidadeNecessaria = receita.getQuantidade();
 
-            estoqueService.saidaEstoque(ingrediente, quantidadeNecessaria); // Saída do estoque de ingredientes
+            estoqueService.saidaEstoque(ingrediente, BigDecimal.valueOf(quantidadeNecessaria.intValue())); // Saída do estoque de ingredientes
         }
 
-        estoqueService.entradaEstoque(produtoFinal, 1); // Entrada no estoque do produto final
+        estoqueService.entradaEstoque(produtoFinal, BigDecimal.ONE); // Entrada no estoque do produto final
 
         // Registra a produção
         Producao producao = new Producao();
