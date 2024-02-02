@@ -16,6 +16,9 @@ public class VendaService {
     @Autowired
     private EstoqueService estoqueService;
 
+    @Autowired
+    private ProducaoService producaoService;
+
     public void realizarVenda(Integer clienteId, Produto produto, int quantidade) {
         Cliente cliente = clienteService.obterClientePorId(clienteId);
 
@@ -34,6 +37,8 @@ public class VendaService {
         BigDecimal quantidadeBigDecimal = BigDecimal.valueOf(quantidade);
         estoqueService.saidaEstoque(produto, quantidadeBigDecimal);// Saída do estoque do produto
         clienteService.adicionarCreditosAoCliente(clienteId, valorTotal.negate()); // Deduz os créditos do cliente
+
+        producaoService.produzirProduto(produto.getId());
     }
 
 }

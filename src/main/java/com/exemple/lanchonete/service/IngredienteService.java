@@ -18,7 +18,6 @@ public class IngredienteService {
     }
 
         public Ingrediente cadastrarIngrediente(Ingrediente ingrediente) {
-            // Verifica se o ingrediente já existe pelo nome
             if (ingredienteRepository.existsByNomeProduto(ingrediente.getNomeProduto())) {
                 throw new RuntimeException("Já existe um ingrediente com o mesmo nome: " + ingrediente.getNomeProduto());
             }
