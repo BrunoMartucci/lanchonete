@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,8 +18,7 @@ public class ItemDaReceita extends PadraoIdInteiro{
 
         @ManyToOne
         @JoinColumn(name = "produto_final_id", nullable = false)
-        private Produto produtoFinal;
-
+        private ProdutoFinal produtoFinal;
         @ManyToOne
         @JoinColumn(name = "ingrediente_id", nullable = false)
         private Produto ingrediente;
