@@ -1,9 +1,6 @@
 package com.exemple.lanchonete.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +19,16 @@ public class Receita extends PadraoIdInteiro {
     @JoinColumn(name = "produto_final_id", nullable = false)
     private Produto produtoFinal;
 
+    @OneToMany(mappedBy = "receita", cascade = CascadeType.ALL)
+    private List<ItemDaReceita> itensDaReceita;
+
+    public List<ItemDaReceita> getItensDaReceita() {
+        return itensDaReceita;
+    }
+
+    public void setItensDaReceita(List<ItemDaReceita> itensDaReceita) {
+        this.itensDaReceita = itensDaReceita;
+    }
     @ManyToOne
     @JoinColumn(name = "ingrediente_id", nullable = false)
     private Produto ingrediente;
@@ -52,6 +59,5 @@ public class Receita extends PadraoIdInteiro {
     public void setQuantidade(BigDecimal quantidade) {
         this.quantidade = quantidade;
     }
-
 
 }

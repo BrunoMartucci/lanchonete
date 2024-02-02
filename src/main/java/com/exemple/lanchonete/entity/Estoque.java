@@ -1,5 +1,6 @@
 package com.exemple.lanchonete.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class Estoque extends PadraoIdInteiro {
 
     @ManyToOne
     @JoinColumn(name = "produto_id", nullable = false)
+    @JsonBackReference
     private Produto produto;
 
     @Column(nullable = false)
