@@ -1,9 +1,12 @@
 package com.exemple.lanchonete.api;
 
+import com.exemple.lanchonete.dto.ProdutoDTO;
 import com.exemple.lanchonete.entity.Produto;
 import com.exemple.lanchonete.service.ProdutoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,5 +60,15 @@ public class ProdutoController {
             return ResponseEntity.notFound().build();
         }
     }
+    @Autowired
+    public ProdutoController(ProdutoService produtoService) {
+        this.produtoService = produtoService;
+    }
+
+    @GetMapping("/listar-produtos")
+    public Page<ProdutoDTO> listarProdutosPaginados(Pageable pageable) {
+        return produtoService.listarProdutosPaginados(pageable);
+    }
+
 }
 

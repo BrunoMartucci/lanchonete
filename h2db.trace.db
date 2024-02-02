@@ -412,3 +412,6 @@ org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "PRODUTO_ID" not found; SQL stat
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
 	at com.exemple.lanchonete.LanchoneteApplication.main(LanchoneteApplication.java:10)
+2024-02-02 17:17:08.943422-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PRODUTOS" not found; SQL statement:
+SELECT nome_produto, valor_de_entrada, valor_de_venda, tipo_do_produto, situacao_do_produto, data_de_cadastro FROM produtos fetch first ? rows only [42102-224]

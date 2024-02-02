@@ -1,5 +1,6 @@
 package com.exemple.lanchonete.service;
 
+import com.exemple.lanchonete.dto.ProdutoDTO;
 import com.exemple.lanchonete.entity.Producao;
 import com.exemple.lanchonete.entity.Produto;
 import com.exemple.lanchonete.entity.Receita;
@@ -7,6 +8,8 @@ import com.exemple.lanchonete.repository.ProducaoRepository;
 import com.exemple.lanchonete.repository.ProdutoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -63,6 +66,7 @@ public class ProducaoService {
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com o ID: " + produtoId));
     }
 }
+
 
 
 

@@ -1,10 +1,15 @@
 package com.exemple.lanchonete.service;
 
+import com.exemple.lanchonete.dto.ProdutoDTO;
 import com.exemple.lanchonete.entity.*;
 import com.exemple.lanchonete.repository.ProdutoRepository;
 import com.exemple.lanchonete.repository.ReceitaRepository;
+import com.exemple.lanchonete.transform.ProdutoDTOResultTransformer;
 import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.transform.ResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -101,6 +106,15 @@ public class ProdutoService {
         }
 
         estoqueService.entradaEstoque(produtoFinal, BigDecimal.valueOf(1)); // Entrada no estoque do produto final
+    }
+
+    @Autowired
+    public void ProdutoService(ProdutoRepository produtoRepository) {
+        this.produtoRepository = produtoRepository;
+    }
+    public Page<ProdutoDTO> listarProdutosPaginados(Pageable pageable) {
+        ResultTransformer transformer = new ProdutoDTOResultTransformer();
+        return produtoRepository.listarProdutosPaginados(pageable, transformer);
     }
 
 
