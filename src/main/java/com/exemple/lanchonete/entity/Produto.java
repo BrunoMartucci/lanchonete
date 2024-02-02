@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Produto extends PadraoIdInteiro {
+public class Produto extends PadraoIdInteiro {
 
     @Column(nullable = false, unique = true, length = 60)
     private String nomeProduto;
