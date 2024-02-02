@@ -1,12 +1,20 @@
 package com.exemple.lanchonete.service;
 
+import com.exemple.lanchonete.dto.ValorTotalVendasDTO;
+import com.exemple.lanchonete.dto.VendaDTO;
 import com.exemple.lanchonete.entity.Cliente;
+import com.exemple.lanchonete.entity.LogCredito;
 import com.exemple.lanchonete.repository.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,6 +74,24 @@ public class ClienteService {
 
         cliente.setCreditos(cliente.getCreditos().add(valor));
         clienteRepository.save(cliente);
+    }
+    public List<LogCredito> obterLogsCreditoCliente(Integer clienteId) {
+        return clienteRepository.findByClienteIdOrderByDataRegistroDesc(clienteId);
+    }
+    public Page<VendaDTO> obterHistoricoVendasClientePaginado(Integer clienteId, int page, int size) {
+        Pageable pageable = (Pageable) PageRequest.of(page, size);
+
+        return (Page<VendaDTO>) clienteRepository.obterHistoricoVendasClientePaginado(@Param("clienteId") Integer clienteId, Pageable pageable);
+    }
+
+    @Autowired
+    public ClienteService(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
+    public Page<ValorTotalVendasDTO> obterValorTotalVendasClientePaginado(Integer clienteId, LocalDate startDate, LocalDate endDate, int page, int size) {
+        Pageable pageable = (Pageable) PageRequest.of(page, size);
+
+        return (Page<ValorTotalVendasDTO>) clienteRepository.obterValorTotalVendasClientePaginado(clienteId, startDate, endDate, pageable);
     }
 
 }

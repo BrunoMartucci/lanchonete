@@ -1,14 +1,18 @@
 package com.exemple.lanchonete.api;
 
+import com.exemple.lanchonete.dto.ValorTotalVendasDTO;
 import com.exemple.lanchonete.entity.Cliente;
+import com.exemple.lanchonete.entity.LogCredito;
 import com.exemple.lanchonete.service.ClienteService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -73,5 +77,25 @@ public class ClienteController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno no servidor");
         }
     }
+    @GetMapping("/{clienteId}/logs-credito")
+    public List<LogCredito> obterLogsCreditoCliente(@PathVariable Integer clienteId) {
+        return clienteService.obterLogsCreditoCliente(clienteId);
+    }
+    @Autowired
+    public ClienteController(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
+
+    @GetMapping("/{clienteId}/valor-total-vendas")
+    public Page<ValorTotalVendasDTO> obterValorTotalVendasClientePaginado(
+            @PathVariable Integer clienteId,
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalDate endDate,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return clienteService.obterValorTotalVendasClientePaginado(clienteId, startDate, endDate, page, size);
+    }
+
+
 }
 

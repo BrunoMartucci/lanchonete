@@ -7,6 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+
 @Repository
 public interface EstoqueRepository extends JpaRepository <Estoque, Integer> {
 
@@ -16,5 +20,11 @@ public interface EstoqueRepository extends JpaRepository <Estoque, Integer> {
     @Query("SELECT COALESCE(SUM(e.quantidade), 0) FROM Estoque e WHERE e.produto = :produto AND e.tipoMovimentacaoEstoque = 'SAIDA'")
     int findQuantidadeSaidaByProduto(@Param("produto") Produto produto);
 
-
 }
+
+
+
+
+
+
+
