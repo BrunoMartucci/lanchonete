@@ -4,16 +4,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-@Getter
-@Setter
-@NoArgsConstructor
+
 @Entity
 public class LogCredito extends PadraoIdInteiro{
 
@@ -24,6 +20,30 @@ public class LogCredito extends PadraoIdInteiro{
     @Column(nullable = false)
     private BigDecimal valor;
 
-    @Column(nullable = false)
-    private LocalDateTime dataRegistro;
+    @Column(name = "data_registro", nullable = false)
+    private LocalDate dataRegistro;
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public LocalDate getDataRegistro() {
+        return dataRegistro;
+    }
+
+    public void setDataRegistro(LocalDate dataRegistro) {
+        this.dataRegistro = dataRegistro;
+    }
 }

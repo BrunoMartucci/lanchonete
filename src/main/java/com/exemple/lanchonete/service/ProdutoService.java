@@ -40,24 +40,18 @@ public class ProdutoService {
             throw new RuntimeException("Já existe um produto com o mesmo nome: " + produto.getNomeProduto());
         }
 
-        // Verificar se o tipo do produto é válido (final, matéria-prima, adicional)
         TipoDoProduto tipoDoProduto = produto.getTipoDoProduto();
         if (tipoDoProduto == null) {
             throw new IllegalArgumentException("O tipo do produto não pode ser nulo");
         }
 
-        // Outras verificações específicas do tipo, se necessário...
-
-        // Não é mais necessário inicializar as listas de Entrada e Saída
-
-        // Crie uma instância de Estoque e associe ao produto
         Estoque estoque = new Estoque();
         estoque.setProduto(produto);
-        estoque.setQuantidade(BigDecimal.ZERO); // Defina a quantidade inicial conforme necessário
+        estoque.setQuantidade(BigDecimal.ZERO);
         estoque.setDataMovimentacao(LocalDate.now());
-        estoque.setTipoMovimentacaoEstoque(TipoMovimentacaoEstoque.ENTRADA); // ou outro tipo, conforme necessário
+        estoque.setTipoMovimentacaoEstoque(TipoMovimentacaoEstoque.ENTRADA);
 
-        produto.setEstoque(List.of(estoque)); // Associe o estoque ao produto
+        produto.setEstoque(List.of(estoque));
 
         return produtoRepository.save(produto);
     }
@@ -65,7 +59,6 @@ public class ProdutoService {
     public Produto atualizarProduto(Integer id, Produto produtoAtualizado) {
         Produto produto = obterProdutoPorId(id);
 
-        // Lógica para atualizar outros campos, se necessário
         produto.setNomeProduto(produtoAtualizado.getNomeProduto());
         produto.setValorDeEntrada(produtoAtualizado.getValorDeEntrada());
         produto.setValorDeVenda(produtoAtualizado.getValorDeVenda());
@@ -86,7 +79,6 @@ public class ProdutoService {
     }
 
     public void produzirProduto(Produto produtoFinal) {
-        // Verifica se há ingredientes suficientes
         List<Receita> receitas = receitaService.obterReceitasPorProdutoFinal(produtoFinal);
         for (Receita receita : receitas) {
             Produto ingrediente = receita.getIngrediente();
@@ -97,15 +89,14 @@ public class ProdutoService {
             }
         }
 
-        // Realiza a produção
         for (Receita receita : receitas) {
             Produto ingrediente = receita.getIngrediente();
             BigDecimal quantidadeNecessaria = receita.getQuantidade();
 
-            estoqueService.saidaEstoque(ingrediente, quantidadeNecessaria); // Saída do estoque de ingredientes
+            estoqueService.saidaEstoque(ingrediente, quantidadeNecessaria);
         }
 
-        estoqueService.entradaEstoque(produtoFinal, BigDecimal.valueOf(1)); // Entrada no estoque do produto final
+        estoqueService.entradaEstoque(produtoFinal, BigDecimal.valueOf(1));
     }
 
     @Autowired

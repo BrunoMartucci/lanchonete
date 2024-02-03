@@ -1,7 +1,10 @@
 package com.exemple.lanchonete.dto;
 
+import lombok.Setter;
+
 import java.math.BigDecimal;
 
+@Setter
 public class ValorTotalVendasDTO {
 
     private BigDecimal valorTotal;
@@ -14,5 +17,4 @@ public class ValorTotalVendasDTO {
         return valorTotal;
     }
 
-    // setters (se necessário)
 }

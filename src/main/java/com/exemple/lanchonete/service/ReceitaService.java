@@ -37,7 +37,6 @@ public class ReceitaService {
     private List<Receita> listaDeReceitas;
 
     public List<Receita> getReceitas() {
-        // Lógica para obter a lista de receitas
         return listaDeReceitas;
     }
 

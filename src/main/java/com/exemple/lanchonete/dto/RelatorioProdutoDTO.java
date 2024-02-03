@@ -1,7 +1,12 @@
 package com.exemple.lanchonete.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 
+@Getter
+@Setter
 public class RelatorioProdutoDTO {
 
     private String nomeProduto;
@@ -15,6 +20,4 @@ public class RelatorioProdutoDTO {
         this.valorDeEntrada = valorDeEntrada;
         this.valorDeVenda = valorDeVenda;
     }
-
-    // getters e setters
 }

@@ -12,6 +12,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +27,16 @@ public class Cliente extends PadraoIdInteiro{
 
     @Column(nullable = false)
     private LocalDate dataDeCadastro = LocalDate.now();
+
+    private List<LogCredito> logsCredito;
+
+    public List<LogCredito> getLogsCredito() {
+        return logsCredito;
+    }
+
+    public void setLogsCredito(List<LogCredito> logsCredito) {
+        this.logsCredito = logsCredito;
+    }
 
     public String getNome() {
         return nome;

@@ -28,16 +28,17 @@ public class VendaService {
             throw new RuntimeException("Créditos insuficientes para realizar a compra.");
         }
 
-        // Verifica se há estoque suficiente
+
         if (!estoqueService.temEstoque(produto, BigDecimal.valueOf(quantidade))) {
             throw new RuntimeException("Estoque insuficiente para o produto: " + produto.getNomeProduto());
         }
 
-        // Realiza a venda
-        BigDecimal quantidadeBigDecimal = BigDecimal.valueOf(quantidade);
-        estoqueService.saidaEstoque(produto, quantidadeBigDecimal);// Saída do estoque do produto
-        clienteService.adicionarCreditosAoCliente(clienteId, valorTotal.negate()); // Deduz os créditos do cliente
 
+        BigDecimal quantidadeBigDecimal = BigDecimal.valueOf(quantidade);
+        estoqueService.saidaEstoque(produto, quantidadeBigDecimal);
+        clienteService.adicionarCreditosAoCliente(clienteId, valorTotal.negate());
+
+        BigDecimal custoEntrada = produto.getValorDeEntrada();
         producaoService.produzirProduto(produto.getId());
     }
 

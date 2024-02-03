@@ -26,7 +26,7 @@ public class Estoque extends PadraoIdInteiro {
     private BigDecimal quantidade;
 
     @Column(nullable = false)
-    private LocalDate dataMovimentacao;  // Change the type to LocalDate
+    private LocalDate dataMovimentacao;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

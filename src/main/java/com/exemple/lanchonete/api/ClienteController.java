@@ -81,6 +81,7 @@ public class ClienteController {
     public List<LogCredito> obterLogsCreditoCliente(@PathVariable Integer clienteId) {
         return clienteService.obterLogsCreditoCliente(clienteId);
     }
+
     @Autowired
     public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;

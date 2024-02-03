@@ -22,10 +22,10 @@ public class ProdutoDTOResultTransformer implements ResultTransformer {
                 case "valor_de_venda":
                     produtoDTO.setValorDeVenda((BigDecimal) tuple[i]);
                     break;
-                // Adicione outros casos para os campos restantes
+
             }
         }
-        return produtoDTO; // Certifique-se de que o método transformTuple seja fechado corretamente.
+        return produtoDTO;
     }
 
 

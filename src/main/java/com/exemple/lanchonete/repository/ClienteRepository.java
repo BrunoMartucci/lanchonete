@@ -4,20 +4,21 @@ import com.exemple.lanchonete.dto.ValorTotalVendasDTO;
 import com.exemple.lanchonete.dto.VendaDTO;
 import com.exemple.lanchonete.entity.Cliente;
 import com.exemple.lanchonete.entity.LogCredito;
-import org.hibernate.query.Page;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.awt.print.Pageable;
+
 import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     boolean existsByNome(String nome);
+
     List<LogCredito> findByClienteIdOrderByDataRegistroDesc(Integer clienteId);
 
     @Query(value = "SELECT v.data_venda AS dataVenda, p.nome_produto AS produto, v.valor_total AS valorTotal " +
@@ -42,7 +43,9 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
                                                                    @Param("startDate") LocalDate startDate,
                                                                    @Param("endDate") LocalDate endDate,
                                                                    Pageable pageable);
+
 }
+
 
 
 

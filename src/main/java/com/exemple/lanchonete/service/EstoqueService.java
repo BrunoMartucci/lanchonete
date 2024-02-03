@@ -16,7 +16,6 @@ public class EstoqueService {
     @Autowired
     private EstoqueRepository estoqueRepository;
 
-    // Verifica se há estoque suficiente para um produto
     public boolean temEstoque(Produto produto, BigDecimal quantidadeRequerida) {
         int quantidadeMovimentacao = estoqueRepository.findQuantidadeMovimentacaoByProduto(produto);
         BigDecimal quantidadeMovimentacaoBigDecimal = BigDecimal.valueOf(quantidadeMovimentacao);
@@ -24,15 +23,12 @@ public class EstoqueService {
         return quantidadeMovimentacaoBigDecimal.compareTo(quantidadeRequerida) >= 0;
     }
 
-
-    // Obtém a quantidade disponível no estoque para um produto
     public int getQuantidadeDisponivel(Produto produto) {
         int quantidadeMovimentacao = estoqueRepository.findQuantidadeMovimentacaoByProduto(produto);
 
         return quantidadeMovimentacao;
     }
 
-    // Realiza uma entrada de estoque para um produto
     public void entradaEstoque(Produto produto, BigDecimal quantidade) {
         Estoque estoque = new Estoque();
         estoque.setProduto(produto);
@@ -42,7 +38,6 @@ public class EstoqueService {
         estoqueRepository.save(estoque);
     }
 
-    // Realiza uma saída de estoque para um produto
     public void saidaEstoque(Produto produto, BigDecimal quantidade) {
         if (!temEstoque(produto, quantidade)) {
             throw new RuntimeException("Estoque insuficiente para o produto: " + produto.getNomeProduto());

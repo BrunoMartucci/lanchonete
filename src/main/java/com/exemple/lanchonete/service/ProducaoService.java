@@ -32,10 +32,8 @@ public class ProducaoService {
 
 
     public void produzirProduto(Integer produtoId) {
-        // Obtém o produto final a ser produzido
         Produto produtoFinal = obterProdutoPorId(produtoId);
 
-        // Verifica se há ingredientes suficientes
         for (Receita receita : receitaService.obterReceitasPorProdutoFinal(produtoFinal)) {
             Produto ingrediente = receita.getIngrediente();
             BigDecimal quantidadeNecessaria = receita.getQuantidade();
@@ -45,17 +43,15 @@ public class ProducaoService {
             }
         }
 
-// Realiza a produção
         for (Receita receita : receitaService.obterReceitasPorProdutoFinal(produtoFinal)) {
             Produto ingrediente = receita.getIngrediente();
             BigDecimal quantidadeNecessaria = receita.getQuantidade();
 
-            estoqueService.saidaEstoque(ingrediente, BigDecimal.valueOf(quantidadeNecessaria.intValue())); // Saída do estoque de ingredientes
+            estoqueService.saidaEstoque(ingrediente, BigDecimal.valueOf(quantidadeNecessaria.intValue()));
         }
 
-        estoqueService.entradaEstoque(produtoFinal, BigDecimal.ONE); // Entrada no estoque do produto final
+        estoqueService.entradaEstoque(produtoFinal, BigDecimal.ONE);
 
-        // Registra a produção
         Producao producao = new Producao();
         producao.setProdutoFinal(produtoFinal);
         producao.setDataProducao(new Date());
